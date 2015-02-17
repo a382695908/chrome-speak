@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-csp>
+  <head>
+    <meta charset="utf-8">
+    <!-- bower:css -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+
+    <link rel="stylesheet" href="modules/core/styles/main.css">
+  </head>
+  <body>
+    <div ui-view></div>
+
+    <!-- bower:js -->
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="lib/angular-ui-utils/ui-utils.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="lib/angular-resource/angular-resource.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/lodash/lodash.js"></script>
+    <script src="lib/howler/howler.js"></script>
+    <script src="lib/async/lib/async.js"></script>
+    <!-- endbower -->
+
+    <script src="modules/config.js"></script>
+    <script src="modules/root.js"></script>
+    <script src="modules/core/core.module.js"></script>
+    <script src="modules/popup/popup.module.js"></script>
+    <script src="modules/core/services/speak.service.js"></script>
+    <script src="modules/popup/config/popup.routes.js"></script>
+    <script src="modules/popup/controllers/popup.controller.js"></script>
+  </body>
+</html>

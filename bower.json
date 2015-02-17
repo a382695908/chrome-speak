@@ -1,0 +1,17 @@
+{
+  "name": "chrome-ivona",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "*",
+    "angular-ui-router": "*",
+    "angular-ui-utils": "*",
+    "angular-bootstrap": "*",
+    "angular-resource": "*",
+    "bootstrap": "*",
+    "jquery": "*",
+    "lodash": "~3.2.0",
+    "howler": "~1.1.25",
+    "async": "~0.9.2"
+  },
+  "devDependencies": {}
+}
