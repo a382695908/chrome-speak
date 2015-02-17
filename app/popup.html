@@ -1,35 +1,54 @@
 <!doctype html>
 <html ng-csp>
-  <head>
-    <meta charset="utf-8">
-    <!-- bower:css -->
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
+	<head>
+		<meta charset="utf-8">
+		<!-- bower:css -->
+		<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+		<!-- endbower -->
 
-    <link rel="stylesheet" href="modules/core/styles/main.css">
-  </head>
-  <body>
-    <div ui-view></div>
+		<link rel="stylesheet" href="modules/core/styles/main.css">
+	</head>
+	<body>
+		<section data-ng-controller="PopupController" class="col-lg-6" style="min-width:250px">
+			<div data-ng-if="player">
+				<span data-ng-bind="player.playing ? 'Playing' : 'Paused' "></span>
+				<div class="btn-group">
+					<button data-ng-if="player.playing" data-ng-click="player.pause()" class="btn btn-primary">
+						<i class="glyphicon glyphicon-pause"></i>
+					</button>
+					<button data-ng-if="!player.playing" data-ng-click="player.play()" class="btn btn-primary">
+						<i class="glyphicon glyphicon-play"></i>
+					</button>
+					<button data-ng-click="player.stop()" class="btn btn-primary">
+						<i class="glyphicon glyphicon-stop"></i>
+					</button>
+				</div>
+			</div>
+			<div data-ng-if="!player">
+				There aren't any player.
+			</div>
+		</section>
 
-    <!-- bower:js -->
-    <script src="lib/jquery/dist/jquery.js"></script>
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="lib/angular-ui-utils/ui-utils.js"></script>
-    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="lib/angular-resource/angular-resource.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="lib/lodash/lodash.js"></script>
-    <script src="lib/howler/howler.js"></script>
-    <script src="lib/async/lib/async.js"></script>
-    <!-- endbower -->
 
-    <script src="modules/config.js"></script>
-    <script src="modules/root.js"></script>
-    <script src="modules/core/core.module.js"></script>
-    <script src="modules/popup/popup.module.js"></script>
-    <script src="modules/core/services/speak.service.js"></script>
-    <script src="modules/popup/config/popup.routes.js"></script>
-    <script src="modules/popup/controllers/popup.controller.js"></script>
-  </body>
+		<!-- bower:js -->
+		<script src="lib/jquery/dist/jquery.js"></script>
+		<script src="lib/angular/angular.js"></script>
+		<script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+		<script src="lib/angular-ui-utils/ui-utils.js"></script>
+		<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script src="lib/angular-resource/angular-resource.js"></script>
+		<script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="lib/lodash/lodash.js"></script>
+		<script src="lib/howler/howler.js"></script>
+		<script src="lib/async/lib/async.js"></script>
+		<!-- endbower -->
+
+		<script src="modules/config.js"></script>
+		<script src="modules/root.js"></script>
+		<script src="modules/core/core.module.js"></script>
+		<script src="modules/popup/popup.module.js"></script>
+		<script src="modules/core/services/speak.service.js"></script>
+		<script src="modules/popup/config/popup.routes.js"></script>
+		<script src="modules/popup/controllers/popup.controller.js"></script>
+	</body>
 </html>

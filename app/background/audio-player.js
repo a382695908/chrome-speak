@@ -9,7 +9,7 @@
 	 */
 	function execute(fn, args) {
 		if (typeof fn === 'function') {
-			fn.apply(this, _.isArray(args) ? args : []); 			/* jshint ignore:line */
+			fn.apply(this, _.isArray(args) ? args : []); /* jshint ignore:line */
 			return true;
 		} else {
 			return false;
@@ -82,74 +82,12 @@
 				$(player).remove();
 			});
 
-			currentPlayer = players = null;
-
+			players = null;
+			_.remove(AudioPlayer.players, self);
 			execute.call(undefined, self.onremoved);
-
-			_.forIn(self, function(value, key) {
-				delete self[key];
-			});
 		};
 
-		//setters
-		this.set = function set(name, value) {
-			if (name === 'urls') {
-				if (!playing) {
-					if (_.isArray(value) && _.every(value, _.isString)) {
-						urls = value;
-
-						if (players) {
-							_.each(players, function(player) {
-								$(player).remove();
-							});
-						}
-
-						players = _.map(urls, function(url) {
-							var $player = $('<audio>', {
-									src: url,
-									preload: 'preload'
-								}),
-								player = $player.get(0);
-
-							$('body').append($player);
-
-							player.onended = onPlayerEnded;
-
-							return player;
-						});
-
-					} else {
-						throw new Error('Invalid urls:', value);
-					}
-				} else {
-					throw new Error('Can\'t set urls while playing');
-				}
-			} else {
-				console.warn('Undefined attribute "' + name + '" on set.');
-			}
-		};
-
-		//private methods
-		function onPlayerEnded(){
-			var player = this;			/* jshint ignore:line */
-			var index = players.lastIndexOf(player);
-
-			if (index < players.length - 1){
-				//currentPlayer at the begining
-				currentPlayer.load();
-				currentPlayer.pause();
-				//current player is the next
-				currentPlayer = players[index + 1];
-				currentPlayer.play();
-				execute.call(self, self.onendedblock, [player]);
-			} else {
-				self.stop();
-				execute.call(self, self.onendedblock, [player]);
-				execute.call(self, self.onended);
-			}
-		}
-
-
+		//getters
 		this.get = function get(name) {
 			if (name === 'urls') {
 				return urls;
@@ -158,6 +96,68 @@
 			}
 		};
 
+		//setters
+		this.set = function set(name, value) {
+			switch (name) {
+				case 'urls':
+					return setUrls(value);
+				default:
+					console.warn('Undefined attribute "' + name + '" on set.');
+			}
+		};
+
+		function setUrls(newUrls) {
+			if (!playing) {
+				if (_.isArray(newUrls) && _.every(newUrls, _.isString) && newUrls.length > 0) {
+					urls = newUrls;
+
+					if (players) {
+						_.each(players, function(player) {
+							$(player).remove();
+						});
+					}
+
+					players = _.map(newUrls, function(url) {
+						var $player = $('<audio>', {
+								src: url,
+								preload: 'preload'
+							}),
+							player = $player.get(0);
+
+						$('body').append($player);
+
+						player.onended = onPlayerEnded;
+
+						return player;
+					});
+
+				} else {
+					throw new Error('Invalid urls:', urls);
+				}
+			} else {
+				throw new Error('Can\'t set urls while playing');
+			}
+		}
+
+		//private methods
+		function onPlayerEnded() {
+			var player = this, // jshint ignore:line 
+				index = players.lastIndexOf(player);
+
+			if (index < players.length - 1) {
+				currentPlayer.load();
+				currentPlayer.pause();
+				currentPlayer = players[index + 1];
+				currentPlayer.play();
+				execute.call(self, self.onendedblock, [player]);
+			} else {
+				if (args.autoremove)
+					self.remove();
+				else self.stop();
+				execute.call(self, self.onendedblock, [player]);
+				execute.call(self, self.onended);
+			}
+		}
 
 		//constructor	
 		(function constructor() {

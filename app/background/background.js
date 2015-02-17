@@ -91,10 +91,8 @@ var SpeakModule = (function(context, $, _, async) {
 
 	var Speak = (function(AudioPlayer) {
 
-
-		
-
 		var truncate = (function() {
+
 			function splitPreserve(text, sepChar) {
 				return text.split(sepChar).join(sepChar + '/~¬~/').split('/~¬~/');
 			}
@@ -274,6 +272,7 @@ var ContextMenuModule = (function(context, _, SpeakModule, SettingsModule) {
 
 			if (Speak.players.length > 0){
 				_.each(Speak.players, function(player){
+					console.log('aaa',player);
 					player.stop();
 				});
 			}
