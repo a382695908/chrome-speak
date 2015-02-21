@@ -10,7 +10,7 @@ angular.module('popup').controller('PopupController', ['$scope', 'Speak',
 
 			 if (player) 
 			 	player.onremoved = function(){
-			 		$scope.$apply(function(){
+			 		$scope.$safeApply(function(){
 			 			$scope.player = getPlayer();
 			 		});
 			 	};
